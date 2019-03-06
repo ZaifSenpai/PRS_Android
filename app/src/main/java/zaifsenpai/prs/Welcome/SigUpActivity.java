@@ -2,12 +2,13 @@ package zaifsenpai.prs.Welcome;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import zaifsenpai.prs.General._Methods;
 import zaifsenpai.prs.General._Properties;
@@ -43,14 +44,33 @@ public class SigUpActivity extends Activity
                 if (name.getText().length() < _Properties.USERNAME_MIN_LENGTH)
                     error_text = getString(R.string.login_invalid_name);
                 if (!_Methods.isValidEmail(email.getText().toString()))
-                    error_text += "\n" + getString(R.string.login_invalid_email);
+                    if (error_text.length() > 0)
+                        error_text += "\n" + getString(R.string.login_invalid_email);
+                    else
+                        error_text += getString(R.string.login_invalid_email);
                 if (username.getText().length() < _Properties.USERNAME_MIN_LENGTH)
-                    error_text += "\n" + getString(R.string.login_invalid_username);
+                    if (error_text.length() > 0)
+                        error_text += "\n" + getString(R.string.login_invalid_username);
+                    else
+                        error_text += getString(R.string.login_invalid_username);
                 if (password.getText().length() < _Properties.PASSWORD_MIN_LENGTH)
-                    error_text += "\n" + getString(R.string.login_invalid_password);
+                    if (error_text.length() > 0)
+                        error_text += "\n" + getString(R.string.login_invalid_password);
+                    else
+                        error_text += getString(R.string.login_invalid_password);
 
-                if (error_text.length() > 0)
-                    Toast.makeText(getApplicationContext(), error_text, Toast.LENGTH_LONG).show();
+                if (error_text.length() > 0) {
+                    Snackbar sb = Snackbar.make(v, error_text, Snackbar.LENGTH_INDEFINITE);
+                    sb.setAction("RETRY", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                        }
+                    });
+                    sb.setActionTextColor(Color.RED);
+                    View sbView = sb.getView();
+                    sbView.setBackgroundColor(Color.WHITE);
+                    sb.show();
+//                    Toast.makeText(getApplicationContext(), error_text, Toast.LENGTH_LONG).show();
 //                    new AlertDialog.Builder(getApplicationContext())
 //                            .setTitle("Invalid Input")
 //                            .setMessage(error_text)
@@ -62,10 +82,9 @@ public class SigUpActivity extends Activity
 //                            .setCancelable(true)
 //                            .setIcon(android.R.drawable.ic_dialog_alert)
 //                            .show();
+                }
                 else {
-                    // Return to home for now
-                    Intent it = new Intent(SigUpActivity.this, WelcomeActivity.class);
-                    startActivity(it);
+                    finish();
                 }
             }
         });

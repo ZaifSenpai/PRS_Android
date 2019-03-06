@@ -10,15 +10,22 @@
         android:background="@drawable/background">
         <TextView
             android:id="@+id/TV_sign_in"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_in"
             android:textSize="25sp"
-            android:textColor="#54abee"
+            android:textColor="#fff"
             android:gravity="center"
             android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
             android:layout_marginBottom="45dp"
-            />
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:paddingRight="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/curved_gray_rectangle"/>
         <TextView
             android:id="@+id/imac"
             android:layout_width="60dp"
@@ -31,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/already_have_an_account"
             android:textSize="16sp"
-            android:textColor="#c4c5c9"
+            android:textColor="#eee"
             android:gravity="center"
             android:layout_above="@id/TV_sign_in"
             android:paddingBottom="16dp"/>
