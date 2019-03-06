@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">PRS</string>
+    <string name="logo">Logo</string>
+    <string name="back_button">Back Button</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="prs">PRS</string>
+    <string name="login_invalid_username">- Please write a valid username</string>
+    <string name="login_invalid_password">- Please write a valid password</string>
+    <string name="login_invalid_email">- Please write a valid email address</string>
+    <string name="login_invalid_name">- Please write a valid name</string>
+    <string name="full_name">Full name</string>
+    <string name="email">Email</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="shape_for_designing">Shape for designing</string>
+    <string name="bag">Bag</string>
+    <string name="sign_up_for_free">Sign Up For Free</string>
 </resources>
