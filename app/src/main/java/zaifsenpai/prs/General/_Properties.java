@@ -1,9 +1,9 @@
-package zaifsenpai.prs;
+package zaifsenpai.prs.General;
 
 /**
  * General Properties which can be used by any class
  */
-abstract class _Properties {
+public abstract class _Properties {
     /**
      * Minimum length allowed of username
      */

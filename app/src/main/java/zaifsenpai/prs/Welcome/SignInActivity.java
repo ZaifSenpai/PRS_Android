@@ -1,4 +1,4 @@
-package zaifsenpai.prs;
+package zaifsenpai.prs.Welcome;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import zaifsenpai.prs.General._Properties;
+import zaifsenpai.prs.Home.MainActivity;
+import zaifsenpai.prs.R;
 
 public class SignInActivity extends Activity {
 
@@ -20,7 +24,7 @@ public class SignInActivity extends Activity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(SignInActivity.this, AppStartActivity.class);
+                Intent it = new Intent(SignInActivity.this, WelcomeActivity.class);
                 startActivity(it);
             }
         });
@@ -51,8 +55,10 @@ public class SignInActivity extends Activity {
 //                            .setCancelable(true)
 //                            .setIcon(android.R.drawable.ic_dialog_alert)
 //                            .show();
-
-
+                else {
+                    Intent it = new Intent(SignInActivity.this, MainActivity.class);
+                    startActivity(it);
+                }
             }
         });
     }

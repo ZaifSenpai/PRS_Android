@@ -1,4 +1,4 @@
-package zaifsenpai.prs;
+package zaifsenpai.prs.General;
 
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -6,7 +6,7 @@ import android.util.Patterns;
 /**
  * General methods which can be used by any class
  */
-abstract class _Methods {
+public abstract class _Methods {
 
     /**
      * Check if given string is a valid email address or not

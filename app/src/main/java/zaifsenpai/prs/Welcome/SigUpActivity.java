@@ -1,4 +1,4 @@
-package zaifsenpai.prs;
+package zaifsenpai.prs.Welcome;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import zaifsenpai.prs.General._Methods;
+import zaifsenpai.prs.General._Properties;
+import zaifsenpai.prs.R;
 
 public class SigUpActivity extends Activity
 {
@@ -21,7 +25,7 @@ public class SigUpActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                Intent it = new Intent(SigUpActivity.this, AppStartActivity.class);
+                Intent it = new Intent(SigUpActivity.this, WelcomeActivity.class);
                 startActivity(it);
             }
         });
@@ -60,7 +64,7 @@ public class SigUpActivity extends Activity
 //                            .show();
                 else {
                     // Return to home for now
-                    Intent it = new Intent(SigUpActivity.this, AppStartActivity.class);
+                    Intent it = new Intent(SigUpActivity.this, WelcomeActivity.class);
                     startActivity(it);
                 }
             }
