@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="background_image">Background Image</string>
+    <string name="home">Home</string>
+    <string name="share">share</string>
+    <string name="review">Review</string>
+    <string name="about">About</string>
+</resources>

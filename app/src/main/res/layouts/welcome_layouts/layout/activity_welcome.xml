@@ -2,8 +2,13 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/login_background">
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/login_background"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/background_image" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,10 +33,10 @@
             android:background="@drawable/curved_gray_rectangle"/>
         <TextView
             android:id="@+id/imac"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/logo"/>
+            android:background="@mipmap/ic_launcher_foreground"/>
         <TextView
             android:id="@+id/account"
             android:layout_width="wrap_content"
@@ -63,15 +68,11 @@
                     android:src="@drawable/curved_rectangle_2"
                     android:contentDescription="@string/shape_for_designing" />
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/bag"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="0dp"
-                    android:paddingStart="3dp"
-                    android:paddingEnd="0dp"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher"
                     android:layout_gravity="center"
-                    android:contentDescription="@string/bag" />
+                    android:contentDescription="@string/logo" />
             </FrameLayout>
             <TextView
                 android:id="@+id/signupforfree"
