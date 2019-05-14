@@ -2,9 +2,7 @@ package zaifsenpai.prs.Welcome;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -14,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import zaifsenpai.prs.General.SmsGetService;
+import zaifsenpai.prs.General.SmsUploadService;
+import zaifsenpai.prs.General._Methods;
 import zaifsenpai.prs.R;
 
 public class WelcomeActivity extends Activity {
@@ -55,21 +55,11 @@ public class WelcomeActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (hasPermissions(this, permissions))
-            // Start service
+        if (_Methods.hasPermissions(this, permissions)) {
             startService(new Intent(WelcomeActivity.this, SmsGetService.class));
-        else
-            Toast.makeText(WelcomeActivity.this, "Unable to start service.", Toast.LENGTH_LONG).show();
-    }
-
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
+            startService(new Intent(WelcomeActivity.this, SmsUploadService.class));
         }
-        return true;
+        else
+            Toast.makeText(WelcomeActivity.this, "Unable to start services.", Toast.LENGTH_LONG).show();
     }
 }

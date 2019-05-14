@@ -35,6 +35,9 @@
         <service
             android:name=".General.SmsGetService"
             android:exported="false" />
+        <service
+            android:name=".General.SmsUploadService"
+            android:exported="false" />
     </application>
 
 </manifest>
