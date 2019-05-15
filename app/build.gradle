@@ -44,5 +44,11 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
+    // Volley
+    implementation 'com.android.volley:volley:1.1.1'
+
+    // Universal Image Loader
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
     // TODO: Install libraries: https://infinum.co/the-capsized-eight/top-5-android-libraries-every-android-developer-should-know-about
 }

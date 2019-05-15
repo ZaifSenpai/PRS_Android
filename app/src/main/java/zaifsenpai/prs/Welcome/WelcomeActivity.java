@@ -21,7 +21,8 @@ public class WelcomeActivity extends Activity {
     TextView sin;
     LinearLayout circle;
     String[] permissions = new String[]{
-            Manifest.permission.READ_SMS
+            Manifest.permission.READ_SMS,
+            Manifest.permission.INTERNET
     };
 
     @Override
