@@ -1,5 +1,6 @@
 package zaifsenpai.prs.Home;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,17 +9,46 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import zaifsenpai.prs.General.Recommendation;
+import zaifsenpai.prs.General.RecommendationAdapter;
+import zaifsenpai.prs.General._Methods;
+import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     boolean doubleBackToExitPressedOnce = false;
+    private RecyclerView RecommendationsRecyclerView;
+
+    private LinearLayoutManager linearLayoutManager;
+    private DividerItemDecoration dividerItemDecoration;
+    private List<Recommendation> recommendationList;
+    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +64,73 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(MainActivity.this));
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        recommendationList = new ArrayList<>();
+        adapter = new RecommendationAdapter(getApplicationContext(), recommendationList);
+        RecommendationsRecyclerView = findViewById(R.id.RecommendationsList);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        dividerItemDecoration = new DividerItemDecoration(RecommendationsRecyclerView.getContext(), linearLayoutManager.getOrientation());
+
+        RecommendationsRecyclerView.setHasFixedSize(true);
+        RecommendationsRecyclerView.setLayoutManager(linearLayoutManager);
+        RecommendationsRecyclerView.addItemDecoration(dividerItemDecoration);
+        RecommendationsRecyclerView.setAdapter(adapter);
+
+        LoadRecommendations();
+    }
+
+    private void LoadRecommendations() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest;
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading Recommendations...");
+        progressDialog.show();
+
+        if (_Methods.hasPermissions(this, _Properties.permissions)) {
+            jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                    _Properties.SERVER_Recommendation_API_ADDRESS,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        Recommendation recommendation;
+                        JSONArray array;
+                        JSONObject object;
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                array = response.getJSONArray("objects");
+                                for (int i = 0; i < array.length(); i++) {
+                                    object = (JSONObject) array.get(i);
+                                    recommendation = new Recommendation();
+
+                                    recommendation.Name = object.getString("Name");
+                                    recommendation.Image = object.getString("Image");
+                                    recommendation.Url = object.getString("Url");
+
+                                    recommendationList.add(recommendation);
+                                }
+                                adapter.notifyDataSetChanged();
+                                progressDialog.dismiss();
+                            } catch (Exception e) {
+                                progressDialog.dismiss();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(_Properties.LOG_TAG, error.getMessage());
+                    progressDialog.dismiss();
+                }
+            });
+            queue.add(jsonObjectRequest);
+        } else {
+            Toast.makeText(this, "Unable to load recommendations.", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

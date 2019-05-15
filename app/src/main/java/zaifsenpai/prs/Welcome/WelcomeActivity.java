@@ -1,6 +1,5 @@
 package zaifsenpai.prs.Welcome;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,16 +13,13 @@ import android.widget.Toast;
 import zaifsenpai.prs.General.SmsGetService;
 import zaifsenpai.prs.General.SmsUploadService;
 import zaifsenpai.prs.General._Methods;
+import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
 
 public class WelcomeActivity extends Activity {
 
     TextView sin;
     LinearLayout circle;
-    String[] permissions = new String[]{
-            Manifest.permission.READ_SMS,
-            Manifest.permission.INTERNET
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +47,7 @@ public class WelcomeActivity extends Activity {
         });
 
         // Get permissions
-        ActivityCompat.requestPermissions(this, permissions, 1);
+        ActivityCompat.requestPermissions(this, _Properties.permissions, 1);
     }
 
     @Override

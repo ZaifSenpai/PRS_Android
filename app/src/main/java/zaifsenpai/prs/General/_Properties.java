@@ -1,5 +1,6 @@
 package zaifsenpai.prs.General;
 
+import android.Manifest;
 import android.content.Context;
 
 /**
@@ -30,7 +31,22 @@ public abstract class _Properties {
      */
     public static String LOG_TAG = "PRS_LOG_TAG";
     /**
+     * ip address of server with port
+     */
+    public static String SERVER_ADDRESS = "http://192.168.2.2:8000";
+    /**
      * API address of server
      */
-    public static String SERVER_API_ADDRESS = "http://192.168.2.2:8000/api/sms/";
+    public static String SERVER_Sms_API_ADDRESS = SERVER_ADDRESS + "/api/sms/";
+    /**
+     * API address of server
+     */
+    public static String SERVER_Recommendation_API_ADDRESS = SERVER_ADDRESS + "/api/recommendation/";
+    /**
+     * Permissions that this app needs
+     */
+    public static String[] permissions = new String[]{
+            Manifest.permission.READ_SMS,
+            Manifest.permission.INTERNET
+    };
 }

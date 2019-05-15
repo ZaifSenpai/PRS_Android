@@ -65,21 +65,19 @@ public class SmsUploadService extends IntentService {
 
         Log.d(_Properties.LOG_TAG, "Starting to upload sms. Total number of sms to upload in this session: " + smsList.size());
         for (Sms sms : smsList) {
-            final Sms _sms = sms;
-
             jsonObject = new JSONObject();
             try {
                 jsonObject.put("Sms_ID", sms.Sms_ID);
-                jsonObject.put("Sms_ID_Source", _sms.Sms_ID_Source);
-                jsonObject.put("Address", _sms.Address);
-                jsonObject.put("Body", _sms.Body);
-                jsonObject.put("Date", _sms.Date);
+                jsonObject.put("Sms_ID_Source", sms.Sms_ID_Source);
+                jsonObject.put("Address", sms.Address);
+                jsonObject.put("Body", sms.Body);
+                jsonObject.put("Date", sms.Date);
             } catch (JSONException e) {
                 continue;
             }
 
             jsonRequest = new JsonObjectRequest(Request.Method.POST,
-                    _Properties.SERVER_API_ADDRESS,
+                    _Properties.SERVER_Sms_API_ADDRESS,
                     jsonObject,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -100,9 +98,9 @@ public class SmsUploadService extends IntentService {
                 }
             };
 
-            Log.d(_Properties.LOG_TAG, "Successfully sent POST request for sms id: " + _sms.Sms_ID);
-            _sms.IsUploaded = true;
-            smsDatabase.smsDao().updateSms(_sms);
+            Log.d(_Properties.LOG_TAG, "Successfully sent POST request for sms id: " + sms.Sms_ID);
+            sms.IsUploaded = true;
+            smsDatabase.smsDao().updateSms(sms);
             SmsUploadRequestQueue.add(jsonRequest);
         }
     }
