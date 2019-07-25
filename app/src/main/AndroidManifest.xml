@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Welcome.WelcomeActivity"
+            android:name=".Home.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme"
             android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,16 +24,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Welcome.WelcomeActivity"
+            android:screenOrientation="locked">
+        </activity>
+        <activity
             android:name=".Welcome.SignInActivity"
             android:screenOrientation="locked" />
         <activity
             android:name=".Welcome.SigUpActivity"
             android:screenOrientation="locked" />
-        <activity
-            android:name=".Home.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="locked"/>
 
         <service
             android:name=".General.SmsGetService"

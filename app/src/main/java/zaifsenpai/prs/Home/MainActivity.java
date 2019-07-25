@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -38,15 +41,12 @@ import zaifsenpai.prs.General.RecommendationAdapter;
 import zaifsenpai.prs.General._Methods;
 import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
+import zaifsenpai.prs.Welcome.WelcomeActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     boolean doubleBackToExitPressedOnce = false;
-    private RecyclerView RecommendationsRecyclerView;
-
-    private LinearLayoutManager linearLayoutManager;
-    private DividerItemDecoration dividerItemDecoration;
     private List<Recommendation> recommendationList;
     private RecyclerView.Adapter adapter;
 
@@ -64,6 +64,20 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        Intent i = new Intent(this, WelcomeActivity.class);
+        startActivityForResult(i, 111);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 111) {
+            ShowRecommendations();
+        } else {
+            finish();
+        }
+    }
+
+    private void ShowRecommendations() {
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(MainActivity.this));
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -71,15 +85,18 @@ public class MainActivity extends AppCompatActivity
 
         recommendationList = new ArrayList<>();
         adapter = new RecommendationAdapter(getApplicationContext(), recommendationList);
-        RecommendationsRecyclerView = findViewById(R.id.RecommendationsList);
-        linearLayoutManager = new LinearLayoutManager(this);
+        RecyclerView recommendationsRecyclerView = findViewById(R.id.RecommendationsList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        dividerItemDecoration = new DividerItemDecoration(RecommendationsRecyclerView.getContext(), linearLayoutManager.getOrientation());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recommendationsRecyclerView.getContext(), linearLayoutManager.getOrientation());
 
-        RecommendationsRecyclerView.setHasFixedSize(true);
-        RecommendationsRecyclerView.setLayoutManager(linearLayoutManager);
-        RecommendationsRecyclerView.addItemDecoration(dividerItemDecoration);
-        RecommendationsRecyclerView.setAdapter(adapter);
+        recommendationsRecyclerView.setHasFixedSize(true);
+        recommendationsRecyclerView.setLayoutManager(linearLayoutManager);
+        recommendationsRecyclerView.addItemDecoration(dividerItemDecoration);
+        recommendationsRecyclerView.setAdapter(adapter);
+
+        // Get permissions
+        ActivityCompat.requestPermissions(this, _Properties.permissions, 1);
 
         LoadRecommendations();
     }
@@ -215,6 +232,16 @@ public class MainActivity extends AppCompatActivity
             sAux = sAux + "http://play.google.com/store/apps/details?id=zaifsenpai.prs\n";
             i.putExtra(Intent.EXTRA_TEXT, sAux);
             startActivity(Intent.createChooser(i, "Choose one"));
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (_Methods.hasPermissions(this, permissions)) {
+//            startService(new Intent(WelcomeActivity.this, SmsGetService.class));
+//            startService(new Intent(WelcomeActivity.this, SmsUploadService.class));
+        } else
+            Toast.makeText(MainActivity.this, "Unable to start services.", Toast.LENGTH_LONG).show();
     }
 }

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import zaifsenpai.prs.General._Properties;
-import zaifsenpai.prs.Home.MainActivity;
 import zaifsenpai.prs.R;
 
 public class SignInActivity extends Activity {
@@ -23,8 +22,9 @@ public class SignInActivity extends Activity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(SignInActivity.this, WelcomeActivity.class);
-                startActivity(it);
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, returnIntent);
+                finish();
             }
         });
 
@@ -40,11 +40,13 @@ public class SignInActivity extends Activity {
                 if (password.getText().length() < _Properties.PASSWORD_MIN_LENGTH)
                     password.setError(getString(R.string.login_invalid_password));
 
-                if (u_name.getError() == null && password.getError() == null)
-                {
-                    Intent it = new Intent(SignInActivity.this, MainActivity.class);
-                    startActivity(it);
+                Intent returnIntent = new Intent();
+                if (u_name.getError() == null && password.getError() == null) {
+                    setResult(Activity.RESULT_OK, returnIntent);
+                } else {
+                    setResult(Activity.RESULT_CANCELED, returnIntent);
                 }
+                finish();
             }
         });
     }

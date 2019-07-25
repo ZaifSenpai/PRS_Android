@@ -12,8 +12,7 @@ import zaifsenpai.prs.General._Methods;
 import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
 
-public class SigUpActivity extends Activity
-{
+public class SigUpActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +21,7 @@ public class SigUpActivity extends Activity
         ImageView back_button = findViewById(R.id.Img_SignUp_Back);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent it = new Intent(SigUpActivity.this, WelcomeActivity.class);
                 startActivity(it);
             }
@@ -47,9 +45,13 @@ public class SigUpActivity extends Activity
                 if (password.getText().length() < _Properties.PASSWORD_MIN_LENGTH)
                     password.setError(getString(R.string.login_invalid_password));
 
+                Intent returnIntent = new Intent();
                 if (name.getError() == null && email.getError() == null && username.getError() == null && password.getError() == null) {
-                    finish();
+                    setResult(Activity.RESULT_OK, returnIntent);
+                } else {
+                    setResult(Activity.RESULT_CANCELED, returnIntent);
                 }
+                finish();
             }
         });
     }
