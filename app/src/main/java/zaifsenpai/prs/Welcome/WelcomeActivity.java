@@ -41,17 +41,20 @@ public class WelcomeActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == 222) {
-            if (resultCode == Activity.RESULT_OK) {
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
-            }
-        } else if (requestCode == 333) {
-            if (resultCode == Activity.RESULT_OK) {
-                Intent it = new Intent(WelcomeActivity.this, SignInActivity.class);
-                startActivityForResult(it, 222);
-            }
+        if (requestCode == 222 && resultCode == Activity.RESULT_OK) {
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        } else if (requestCode == 333 && resultCode == Activity.RESULT_OK) {
+            Intent it = new Intent(WelcomeActivity.this, SignInActivity.class);
+            startActivityForResult(it, 222);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        finish();
     }
 }

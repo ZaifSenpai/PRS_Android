@@ -1,5 +1,6 @@
 package zaifsenpai.prs.Home;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 111) {
+        if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
             ShowRecommendations();
         } else {
             finish();
@@ -210,7 +211,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+            finish();
             return;
         }
 

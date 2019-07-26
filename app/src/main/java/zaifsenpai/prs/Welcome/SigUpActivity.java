@@ -22,8 +22,9 @@ public class SigUpActivity extends Activity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(SigUpActivity.this, WelcomeActivity.class);
-                startActivity(it);
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, returnIntent);
+                finish();
             }
         });
 
@@ -54,5 +55,12 @@ public class SigUpActivity extends Activity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        finish();
     }
 }

@@ -50,4 +50,11 @@ public class SignInActivity extends Activity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        finish();
+    }
 }
