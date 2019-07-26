@@ -38,6 +38,8 @@ import java.util.List;
 
 import zaifsenpai.prs.General.Recommendation;
 import zaifsenpai.prs.General.RecommendationAdapter;
+import zaifsenpai.prs.General.SmsGetService;
+import zaifsenpai.prs.General.SmsUploadService;
 import zaifsenpai.prs.General._Methods;
 import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
@@ -239,8 +241,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (_Methods.hasPermissions(this, permissions)) {
-//            startService(new Intent(WelcomeActivity.this, SmsGetService.class));
-//            startService(new Intent(WelcomeActivity.this, SmsUploadService.class));
+            startService(new Intent(MainActivity.this, SmsGetService.class));
+            startService(new Intent(MainActivity.this, SmsUploadService.class));
         } else
             Toast.makeText(MainActivity.this, "Unable to start services.", Toast.LENGTH_LONG).show();
     }
