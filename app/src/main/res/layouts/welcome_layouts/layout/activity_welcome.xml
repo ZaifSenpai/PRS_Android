@@ -56,24 +56,22 @@
             android:orientation="horizontal"
             android:layout_marginTop="140dp"
             >
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="1dp"
                 android:layout_marginStart="1dp">
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/curved_rectangle_2"
-                    android:contentDescription="@string/shape_for_designing" />
-                <ImageView
                     android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/logo" />
-            </FrameLayout>
+                    android:layout_height="100dp"
+                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
+                    android:src="@mipmap/ic_launcher_foreground" />
+            </RelativeLayout>
             <TextView
                 android:id="@+id/signupforfree"
                 android:layout_width="match_parent"
