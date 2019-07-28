@@ -1,7 +1,9 @@
 package zaifsenpai.prs.Home;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,6 +69,9 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         Intent i = new Intent(this, WelcomeActivity.class);
         startActivityForResult(i, 111);
     }
@@ -74,7 +79,22 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
-            ShowRecommendations();
+            try {
+                ShowRecommendations();
+                // Get permissions
+                ActivityCompat.requestPermissions(this, _Properties.permissions, 1);
+            } catch (Exception e) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setMessage(e.getMessage());
+                alertDialog.setTitle("Error occurred");
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.setCancelable(true);
+                alertDialog.create().show();
+            }
         } else {
             finish();
         }
@@ -82,9 +102,6 @@ public class MainActivity extends AppCompatActivity
 
     private void ShowRecommendations() {
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(MainActivity.this));
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         recommendationList = new ArrayList<>();
         adapter = new RecommendationAdapter(getApplicationContext(), recommendationList);
@@ -97,9 +114,6 @@ public class MainActivity extends AppCompatActivity
         recommendationsRecyclerView.setLayoutManager(linearLayoutManager);
         recommendationsRecyclerView.addItemDecoration(dividerItemDecoration);
         recommendationsRecyclerView.setAdapter(adapter);
-
-        // Get permissions
-        ActivityCompat.requestPermissions(this, _Properties.permissions, 1);
 
         LoadRecommendations();
     }
