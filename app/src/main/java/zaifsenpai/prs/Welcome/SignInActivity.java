@@ -8,15 +8,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
 
 public class SignInActivity extends Activity {
-
+    RequestQueue LoginRequestQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
+        LoginRequestQueue = Volley.newRequestQueue(getApplicationContext());
 
         ImageView back_button = findViewById(R.id.Img_SignIn_Back);
         back_button.setOnClickListener(new View.OnClickListener() {
@@ -32,8 +37,8 @@ public class SignInActivity extends Activity {
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText u_name = findViewById(R.id.ET_SignIn_Username);
-                EditText password = findViewById(R.id.ET_SignIn_Password);
+                final EditText u_name = findViewById(R.id.ET_SignIn_Username);
+                final EditText password = findViewById(R.id.ET_SignIn_Password);
 
                 if (u_name.getText().length() < _Properties.USERNAME_MIN_LENGTH)
                     u_name.setError(getString(R.string.login_invalid_username));
@@ -42,6 +47,46 @@ public class SignInActivity extends Activity {
 
                 Intent returnIntent = new Intent();
                 if (u_name.getError() == null && password.getError() == null) {
+
+//                    StringRequest jsonObjRequest = new StringRequest(
+//                            Request.Method.POST,
+//                            getResources().getString(R.string.base_url),
+//                            new Response.Listener<String>() {
+//                                @Override
+//                                public void onResponse(String response) {
+//
+//                                    MyFunctions.toastShort(LoginActivity.this, response);
+//                                }
+//                            },
+//                            new Response.ErrorListener() {
+//
+//                                @Override
+//                                public void onErrorResponse(VolleyError error) {
+//                                    VolleyLog.d("volley", "Error: " + error.getMessage());
+//                                    error.printStackTrace();
+//                                    MyFunctions.croutonAlert(LoginActivity.this,
+//                                            MyFunctions.parseVolleyError(error));
+//                                    loading.setVisibility(View.GONE);
+//                                }
+//                            }) {
+//
+//                        @Override
+//                        public String getBodyContentType() {
+//                            return "application/x-www-form-urlencoded; charset=UTF-8";
+//                        }
+//
+//                        @Override
+//                        protected Map<String, String> getParams() throws AuthFailureError {
+//                            Map<String, String> params = new HashMap<String, String>();
+//                            params.put("Email", u_name.getText().toString().trim());
+//                            params.put("Password", password.getText().toString().trim());
+//                            return params;
+//                        }
+//
+//                    };
+//
+//                    LoginRequestQueue.add(jsonObjRequest);
+
                     setResult(Activity.RESULT_OK, returnIntent);
                 } else {
                     setResult(Activity.RESULT_CANCELED, returnIntent);

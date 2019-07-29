@@ -1,12 +1,15 @@
 package zaifsenpai.prs.General;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,10 +38,17 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         ImageLoader imageLoader = ImageLoader.getInstance();
 
-        Recommendation recommendation = list.get(i);
+        final Recommendation recommendation = list.get(i);
 
         viewHolder.RecommendationText.setText(recommendation.Name);
         imageLoader.displayImage(recommendation.Image, viewHolder.RecommendationImage);
+        viewHolder.RecommendationLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(recommendation.Url));
+                context.startActivity(browserIntent);
+            }
+        });
     }
 
     @Override
@@ -46,17 +56,18 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView RecommendationImage;
-        public TextView RecommendationText;
+        ImageView RecommendationImage;
+        TextView RecommendationText;
+        LinearLayout RecommendationLayout;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             RecommendationImage = itemView.findViewById(R.id.recommendation_image);
             RecommendationText = itemView.findViewById(R.id.recommendation_text);
+            RecommendationLayout = itemView.findViewById(R.id.recommendationLayout);
         }
     }
 }
-

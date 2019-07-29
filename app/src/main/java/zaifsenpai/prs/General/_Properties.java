@@ -35,7 +35,7 @@ public abstract class _Properties {
      */
     // use following command to start the django server: py manage.py runserver 192.168.2.2:8000
     // Make sure that this ip address is in "ALLOWED_HOSTS" list in settings.py
-    public static String SERVER_ADDRESS = "http://192.168.10.6:8000";
+    public static String SERVER_ADDRESS = "http://192.168.2.2:8000";
     /**
      * API address of server
      */
@@ -44,6 +44,18 @@ public abstract class _Properties {
      * API address of server
      */
     public static String SERVER_Recommendation_API_ADDRESS = SERVER_ADDRESS + "/api/recommendation/";
+    /**
+     * ip address of asp.net server with port
+     */
+    public static String ASP_SERVER_ADDRESS = "http://192.168.2.2:8000";
+    /**
+     * API address of server
+     */
+    public static String ASP_SERVER_Login_API_ADDRESS = SERVER_ADDRESS + "/api/Login";
+    /**
+     * API address of server
+     */
+    public static String ASP_SERVER_Signup_API_ADDRESS = SERVER_ADDRESS + "/api/Users/";
     /**
      * Permissions that this app needs
      */
