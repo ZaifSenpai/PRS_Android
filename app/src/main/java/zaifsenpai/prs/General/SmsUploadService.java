@@ -77,7 +77,7 @@ public class SmsUploadService extends IntentService {
             }
 
             jsonRequest = new JsonObjectRequest(Request.Method.POST,
-                    _Properties.SERVER_Sms_API_ADDRESS,
+                    _Properties.DJANGO_SERVER_Sms_API_ADDRESS,
                     jsonObject,
                     new Response.Listener<JSONObject>() {
                         @Override

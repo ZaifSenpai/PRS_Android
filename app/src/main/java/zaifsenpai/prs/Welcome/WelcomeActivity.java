@@ -3,10 +3,12 @@ package zaifsenpai.prs.Welcome;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
 
 public class WelcomeActivity extends Activity {
@@ -36,6 +38,8 @@ public class WelcomeActivity extends Activity {
                 startActivityForResult(it, 333);
             }
         });
+
+        ActivityCompat.requestPermissions(this, _Properties.permissions, 1);
     }
 
     @Override

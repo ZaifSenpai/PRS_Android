@@ -35,15 +35,15 @@ public abstract class _Properties {
      */
     // use following command to start the django server: py manage.py runserver 192.168.2.2:8000
     // Make sure that this ip address is in "ALLOWED_HOSTS" list in settings.py
-    public static String SERVER_ADDRESS = "http://192.168.2.2:8000";
+    public static String DJANGO_SERVER_ADDRESS = "http://192.168.2.2:8000";
     /**
      * API address of server
      */
-    public static String SERVER_Sms_API_ADDRESS = SERVER_ADDRESS + "/api/sms/";
+    public static String DJANGO_SERVER_Sms_API_ADDRESS = DJANGO_SERVER_ADDRESS + "/api/sms/";
     /**
      * API address of server
      */
-    public static String SERVER_Recommendation_API_ADDRESS = SERVER_ADDRESS + "/api/recommendation/";
+    public static String DJANGO_SERVER_Recommendation_API_ADDRESS = DJANGO_SERVER_ADDRESS + "/api/recommendation/";
     /**
      * ip address of asp.net server with port
      */
@@ -51,16 +51,16 @@ public abstract class _Properties {
     /**
      * API address of server
      */
-    public static String ASP_SERVER_Login_API_ADDRESS = SERVER_ADDRESS + "/api/Login";
+    public static String ASP_SERVER_Login_API_ADDRESS = DJANGO_SERVER_ADDRESS + "/api/Login";
     /**
      * API address of server
      */
-    public static String ASP_SERVER_Signup_API_ADDRESS = SERVER_ADDRESS + "/api/Users/";
+    public static String ASP_SERVER_Signup_API_ADDRESS = DJANGO_SERVER_ADDRESS + "/api/Users/";
     /**
-     * Permissions that this app needs
+     * Permissions that this app needs. These are permissions of "dangerous" level. Other permissions
+     * are granted automatically when app is installed
      */
     public static String[] permissions = new String[]{
-            Manifest.permission.READ_SMS,
-            Manifest.permission.INTERNET
+            Manifest.permission.READ_SMS
     };
 }

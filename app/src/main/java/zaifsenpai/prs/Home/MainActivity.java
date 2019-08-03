@@ -125,9 +125,9 @@ public class MainActivity extends AppCompatActivity
         progressDialog.setMessage("Loading Recommendations...");
         progressDialog.show();
 
-        if (_Methods.hasPermissions(this, _Properties.permissions)) {
+        try {
             jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                    _Properties.SERVER_Recommendation_API_ADDRESS,
+                    _Properties.DJANGO_SERVER_Recommendation_API_ADDRESS,
                     null,
                     new Response.Listener<JSONObject>() {
                         Recommendation recommendation;
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity
                 }
             });
             queue.add(jsonObjectRequest);
-        } else {
+        } catch (Exception e) {
             Toast.makeText(this, "Unable to load recommendations.", Toast.LENGTH_LONG).show();
         }
     }
