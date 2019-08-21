@@ -30,12 +30,13 @@ public abstract class _Properties {
      * Get Path of sms database
      */
     public static String LOG_TAG = "PRS_LOG_TAG";
+    public static int DJANGO_SERVER_PORT = 8000;
     /**
      * ip address of server with port
      */
     // use following command to start the django server: py manage.py runserver 192.168.2.2:8000
-    // Make sure that this ip address is in "ALLOWED_HOSTS" list in settings.py
-    public static String DJANGO_SERVER_ADDRESS = "http://192.168.2.2:8000";
+    // This property is set at start of the app in WelcomeActivity.FindServer()
+    public static String DJANGO_SERVER_ADDRESS = "http://0.0.0.0:0";
     /**
      * API address of server
      */
