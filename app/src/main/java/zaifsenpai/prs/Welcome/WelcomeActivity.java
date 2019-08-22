@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.net.InetSocketAddress;
-import java.net.Socket;
-
-import zaifsenpai.prs.General.DnsServersDetector;
 import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
 
@@ -22,6 +23,7 @@ public class WelcomeActivity extends Activity {
 
     LinearLayout circle;
     TextView sin;
+    private String[] ServerInputResultValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,9 @@ public class WelcomeActivity extends Activity {
 
         sin = findViewById(R.id.TV_sign_in);
         circle = findViewById(R.id.circle);
+        ServerInputResultValue = new String[]{"", ""};
 
-        if (FindServer()) {
+        if (SetServerIfFirstTime()) {
             sin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -75,44 +78,76 @@ public class WelcomeActivity extends Activity {
         }
     }
 
-    boolean FindServer() {
-        DnsServersDetector serversDetector = new DnsServersDetector(WelcomeActivity.this);
-        String[] servers = serversDetector.getServers();
-        boolean found = false;
-        for (int i = 0; i < servers.length && !found; i++) {
-            String[] chunks = servers[i].trim().split("\\.");
-            if (chunks.length != 4) continue;
-            String ip = chunks[0] + "." + chunks[1] + "." + chunks[2] + ".";
+    private boolean SetServerIfFirstTime() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        if (preferences.getBoolean("RanBefore", false)) {
+            _Properties.setDjangoServerAddress(preferences.getString("DjangoServerAddress", "0.0.0.0"));
+            _Properties.setAspServerAddress(preferences.getString("AspServerAddress", "0.0.0.0"));
+        } else {
+            String[] addresses = GetServerAddresses();
+            if (addresses[0].isEmpty() || addresses[1].isEmpty())
+                return false;
 
-            int start = Integer.parseInt(chunks[3]) + 1;
-            int end = 256;
+            _Properties.setDjangoServerAddress(addresses[0]);
+            _Properties.setAspServerAddress(addresses[1]);
 
-            for (; start < end && !found; start++) {
-                if (isPortOpen(ip + start, _Properties.DJANGO_SERVER_PORT, 2000)) {
-                    _Properties.DJANGO_SERVER_ADDRESS = "http://" + ip + start + ":" + _Properties.DJANGO_SERVER_PORT;
-                    found = true;
-                }
-            }
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("DjangoServerAddress", addresses[0]);
+            editor.putString("AspServerAddress", addresses[1]);
+            editor.putBoolean("RanBefore", true);
+            editor.apply();
         }
 
-        return found;
+        Log.i(_Properties.LOG_TAG, _Properties.DJANGO_SERVER_ADDRESS);
+        Log.i(_Properties.LOG_TAG, _Properties.ASP_SERVER_ADDRESS);
+
+        return false;
     }
 
-    public static boolean isPortOpen(String ip, int port, int timeout) {
-        Log.i(_Properties.LOG_TAG, "1. Testing: " + ip + ":" + port);
+    private String[] GetServerAddresses() {
+        final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message ignored) {
+                throw new RuntimeException();
+            }
+        };
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Server Addresses");
+        alert.setMessage("Please input addresses of Django and Asp.net app servers separated by semicolon.");
+
+        final EditText input = new EditText(this);
+        input.setHint("IP:Port;IP:Port");
+        alert.setView(input);
+        alert.setCancelable(false);
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String[] splits = input.getText().toString().split(";");
+                if (splits.length == 2) {
+                    ServerInputResultValue[0] = splits[0].trim();
+                    ServerInputResultValue[1] = splits[1].trim();
+                }
+
+                handler.sendMessage(handler.obtainMessage());
+            }
+        });
+
+        alert.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                ServerInputResultValue[0] = "";
+                ServerInputResultValue[1] = "";
+
+                handler.sendMessage(handler.obtainMessage());
+            }
+        });
+        alert.show();
+
         try {
-            Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(ip, port), timeout);
-            socket.setSoTimeout(3000);
-//            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//            String fromServer = in.readLine();
-//            Log.i(_Properties.LOG_TAG, "2. From server: " + fromServer);
-            socket.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
+            Looper.loop();
+        } catch (RuntimeException ignored) {
         }
-        return true;
+
+        return ServerInputResultValue;
     }
 
     @Override
