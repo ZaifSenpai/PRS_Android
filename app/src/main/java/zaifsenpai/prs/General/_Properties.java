@@ -49,11 +49,11 @@ public abstract class _Properties {
     /**
      * API address of server
      */
-    public static String ASP_SERVER_Login_API_ADDRESS = DJANGO_SERVER_ADDRESS + "/api/Login";
+    public static String ASP_SERVER_Login_API_ADDRESS = ASP_SERVER_ADDRESS + "/api/Login";
     /**
      * API address of server
      */
-    public static String ASP_SERVER_Signup_API_ADDRESS = DJANGO_SERVER_ADDRESS + "/api/Users/";
+    public static String ASP_SERVER_Signup_API_ADDRESS = ASP_SERVER_ADDRESS + "/api/Users";
     /**
      * Permissions that this app needs. These are permissions of "dangerous" level. Other permissions
      * are granted automatically when app is installed

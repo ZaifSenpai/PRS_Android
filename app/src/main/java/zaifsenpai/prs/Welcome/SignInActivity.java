@@ -8,8 +8,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
@@ -47,45 +56,38 @@ public class SignInActivity extends Activity {
 
                 Intent returnIntent = new Intent();
                 if (u_name.getError() == null && password.getError() == null) {
+                    StringRequest jsonObjRequest = new StringRequest(
+                            Request.Method.POST,
+                            _Properties.ASP_SERVER_Login_API_ADDRESS,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
 
-//                    StringRequest jsonObjRequest = new StringRequest(
-//                            Request.Method.POST,
-//                            getResources().getString(R.string.base_url),
-//                            new Response.Listener<String>() {
-//                                @Override
-//                                public void onResponse(String response) {
-//
-//                                    MyFunctions.toastShort(LoginActivity.this, response);
-//                                }
-//                            },
-//                            new Response.ErrorListener() {
-//
-//                                @Override
-//                                public void onErrorResponse(VolleyError error) {
-//                                    VolleyLog.d("volley", "Error: " + error.getMessage());
-//                                    error.printStackTrace();
-//                                    MyFunctions.croutonAlert(LoginActivity.this,
-//                                            MyFunctions.parseVolleyError(error));
-//                                    loading.setVisibility(View.GONE);
-//                                }
-//                            }) {
-//
-//                        @Override
-//                        public String getBodyContentType() {
-//                            return "application/x-www-form-urlencoded; charset=UTF-8";
-//                        }
-//
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError {
-//                            Map<String, String> params = new HashMap<String, String>();
-//                            params.put("Email", u_name.getText().toString().trim());
-//                            params.put("Password", password.getText().toString().trim());
-//                            return params;
-//                        }
-//
-//                    };
-//
-//                    LoginRequestQueue.add(jsonObjRequest);
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    VolleyLog.d("volley", "Error: " + error.getMessage());
+                                    // Fail
+                                }
+                            }) {
+
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/x-www-form-urlencoded; charset=UTF-8";
+                        }
+
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("Email", u_name.getText().toString().trim());
+                            params.put("Password", password.getText().toString().trim());
+                            return params;
+                        }
+                    };
+
+                    LoginRequestQueue.add(jsonObjRequest);
 
                     setResult(Activity.RESULT_OK, returnIntent);
                 } else {

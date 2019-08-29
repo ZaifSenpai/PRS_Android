@@ -98,10 +98,7 @@ public class WelcomeActivity extends Activity {
             editor.apply();
         }
 
-        Log.i(_Properties.LOG_TAG, _Properties.DJANGO_SERVER_ADDRESS);
-        Log.i(_Properties.LOG_TAG, _Properties.ASP_SERVER_ADDRESS);
-
-        return false;
+        return true;
     }
 
     private String[] GetServerAddresses() {
