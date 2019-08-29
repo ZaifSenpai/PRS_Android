@@ -1,5 +1,6 @@
 package zaifsenpai.prs.Welcome;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,7 +11,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -102,7 +102,7 @@ public class WelcomeActivity extends Activity {
     }
 
     private String[] GetServerAddresses() {
-        final Handler handler = new Handler() {
+        @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message ignored) {
                 throw new RuntimeException();
@@ -149,7 +149,6 @@ public class WelcomeActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == 222 && resultCode == Activity.RESULT_OK) {
             Intent returnIntent = new Intent();
             setResult(Activity.RESULT_OK, returnIntent);

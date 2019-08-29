@@ -6,7 +6,7 @@ import android.content.Context;
 /**
  * General Properties which can be used by any class
  */
-public abstract class _Properties {
+public class _Properties {
     /**
      * Minimum length allowed of username
      */
@@ -55,6 +55,10 @@ public abstract class _Properties {
      */
     public static String ASP_SERVER_Signup_API_ADDRESS = ASP_SERVER_ADDRESS + "/api/Users";
     /**
+     * Access key received from server on Login
+     */
+    public static String Key = "";
+    /**
      * Permissions that this app needs. These are permissions of "dangerous" level. Other permissions
      * are granted automatically when app is installed
      */
@@ -63,18 +67,24 @@ public abstract class _Properties {
     };
 
     public static void setDjangoServerAddress(String djangoServerAddress) {
+        djangoServerAddress = djangoServerAddress.replaceAll("/$^|/$", "");
         if (!djangoServerAddress.contains("http"))
             djangoServerAddress = "http://" + djangoServerAddress;
         if (!djangoServerAddress.contains(":"))
             djangoServerAddress = djangoServerAddress + ":8000";
         DJANGO_SERVER_ADDRESS = djangoServerAddress;
+        DJANGO_SERVER_Sms_API_ADDRESS = DJANGO_SERVER_ADDRESS + "/api/sms/";
+        DJANGO_SERVER_Recommendation_API_ADDRESS = DJANGO_SERVER_ADDRESS + "/api/recommendation/";
     }
 
     public static void setAspServerAddress(String aspServerAddress) {
+        aspServerAddress = aspServerAddress.replaceAll("/$^|/$", "");
         if (!aspServerAddress.contains("http"))
             aspServerAddress = "http://" + aspServerAddress;
         if (!aspServerAddress.contains(":"))
             aspServerAddress = aspServerAddress + ":8000";
         ASP_SERVER_ADDRESS = aspServerAddress;
+        ASP_SERVER_Login_API_ADDRESS = ASP_SERVER_ADDRESS + "/api/Login";
+        ASP_SERVER_Signup_API_ADDRESS = ASP_SERVER_ADDRESS + "/api/Users";
     }
 }

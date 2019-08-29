@@ -9,7 +9,7 @@ import android.util.Patterns;
 /**
  * General methods which can be used by any class
  */
-public abstract class _Methods {
+public class _Methods {
 
     /**
      * Check if given string is a valid email address or not

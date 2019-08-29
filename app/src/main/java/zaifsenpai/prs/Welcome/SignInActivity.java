@@ -48,13 +48,13 @@ public class SignInActivity extends Activity {
             public void onClick(View v) {
                 final EditText u_name = findViewById(R.id.ET_SignIn_Username);
                 final EditText password = findViewById(R.id.ET_SignIn_Password);
+                final boolean[] finish_now = {false};
 
                 if (u_name.getText().length() < _Properties.USERNAME_MIN_LENGTH)
                     u_name.setError(getString(R.string.login_invalid_username));
                 if (password.getText().length() < _Properties.PASSWORD_MIN_LENGTH)
                     password.setError(getString(R.string.login_invalid_password));
 
-                Intent returnIntent = new Intent();
                 if (u_name.getError() == null && password.getError() == null) {
                     StringRequest jsonObjRequest = new StringRequest(
                             Request.Method.POST,
@@ -62,14 +62,17 @@ public class SignInActivity extends Activity {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-
+                                    _Properties.Key = response;
+                                    setResult(Activity.RESULT_OK, new Intent());
+                                    finish_now[0] = true;
                                 }
                             },
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     VolleyLog.d("volley", "Error: " + error.getMessage());
-                                    // Fail
+                                    u_name.setError("Invalid username");
+                                    password.setError("Invalid password");
                                 }
                             }) {
 
@@ -88,12 +91,10 @@ public class SignInActivity extends Activity {
                     };
 
                     LoginRequestQueue.add(jsonObjRequest);
-
-                    setResult(Activity.RESULT_OK, returnIntent);
-                } else {
-                    setResult(Activity.RESULT_CANCELED, returnIntent);
                 }
-                finish();
+
+                if (finish_now[0])
+                    finish();
             }
         });
     }
