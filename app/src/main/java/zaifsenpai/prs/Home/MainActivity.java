@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -37,7 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import zaifsenpai.prs.General.Recommendation;
 import zaifsenpai.prs.General.RecommendationAdapter;
@@ -155,13 +158,21 @@ public class MainActivity extends AppCompatActivity
                                 progressDialog.dismiss();
                             }
                         }
+
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e(_Properties.LOG_TAG, error.getMessage());
                     progressDialog.dismiss();
                 }
-            });
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>(super.getHeaders());
+                    params.put("key", _Properties.Key);
+                    return params;
+                }
+            };
             queue.add(jsonObjectRequest);
         } catch (Exception e) {
             Toast.makeText(this, "Unable to load recommendations.", Toast.LENGTH_LONG).show();
