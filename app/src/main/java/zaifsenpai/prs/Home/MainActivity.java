@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity
                                     recommendation.Name = object.getString("Name");
                                     recommendation.Image = object.getString("Image");
                                     recommendation.Url = object.getString("Url");
+                                    recommendation.Price = object.getString("Price");
 
                                     recommendationList.add(recommendation);
                                 }

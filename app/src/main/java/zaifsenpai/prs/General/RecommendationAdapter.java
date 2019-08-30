@@ -37,18 +37,24 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         ImageLoader imageLoader = ImageLoader.getInstance();
-
         final Recommendation recommendation = list.get(i);
 
-        viewHolder.RecommendationText.setText(recommendation.Name);
-        imageLoader.displayImage(recommendation.Image, viewHolder.RecommendationImage);
-        viewHolder.RecommendationLayout.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener listerner = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(recommendation.Url));
                 context.startActivity(browserIntent);
             }
-        });
+        };
+
+        viewHolder.RecommendationText.setText(recommendation.Name);
+        imageLoader.displayImage(recommendation.Image, viewHolder.RecommendationImage);
+        viewHolder.RecommendationPrice.setText(recommendation.Price);
+
+        viewHolder.RecommendationText.setOnClickListener(listerner);
+        viewHolder.RecommendationPrice.setOnClickListener(listerner);
+        viewHolder.RecommendationImage.setOnClickListener(listerner);
+        viewHolder.RecommendationLayout.setOnClickListener(listerner);
     }
 
     @Override
@@ -60,6 +66,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
         ImageView RecommendationImage;
         TextView RecommendationText;
+        TextView RecommendationPrice;
         LinearLayout RecommendationLayout;
 
         ViewHolder(View itemView) {
@@ -67,6 +74,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
             RecommendationImage = itemView.findViewById(R.id.recommendation_image);
             RecommendationText = itemView.findViewById(R.id.recommendation_text);
+            RecommendationPrice = itemView.findViewById(R.id.recommendation_price);
             RecommendationLayout = itemView.findViewById(R.id.recommendationLayout);
         }
     }

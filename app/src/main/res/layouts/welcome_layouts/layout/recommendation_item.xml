@@ -8,19 +8,39 @@
     android:clickable="true"
     android:focusable="true">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/card_height"
-        android:id="@+id/recommendation_image"
-        android:clickable="true"
-        android:focusable="true"
-        android:scaleType="centerInside"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:contentDescription="@string/recommendations" />
+        android:layout_height="@dimen/card_height">
+
+        <ImageView
+            android:id="@+id/recommendation_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_height"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:clickable="true"
+            android:contentDescription="@string/recommendations"
+            android:focusable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/baseline_linked_camera_black_48"></ImageView>
+
+        <TextView
+            android:id="@+id/recommendation_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/curved_gray_rectangle"
+            android:textSize="@dimen/album_title" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
