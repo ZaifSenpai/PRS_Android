@@ -50,7 +50,7 @@
                         android:id="@+id/ET_SignIn_Username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/username"
+                        android:hint="@string/email"
                         android:layout_marginTop="20dp"
                         android:textSize="16sp"
                         android:textColorHint="#ADCCE2"

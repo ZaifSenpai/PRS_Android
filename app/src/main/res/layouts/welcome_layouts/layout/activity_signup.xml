@@ -47,10 +47,10 @@
                 android:background="@drawable/curved_gray_rectangle">
                 <EditText
                     android:textSize="16sp"
-                    android:id="@+id/ET_SignUp_Name"
+                    android:id="@+id/ET_SignUp_Username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/full_name"
+                    android:hint="@string/username"
                     android:textColorHint="#ADCCE2"
                     android:textColor="#ADCCE2"
                     android:layout_marginLeft="22dp"
@@ -81,15 +81,15 @@
                     style="@style/hr"/>
                 <EditText
                     android:textSize="16sp"
-                    android:id="@+id/ET_SignUp_Username"
+                    android:id="@+id/ET_DT_Picker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/username"
+                    android:hint="@string/date_of_birth"
                     android:textColorHint="#ADCCE2"
                     android:textColor="#ADCCE2"
                     android:layout_marginLeft="22dp"
                     android:layout_marginStart="22dp"
-                    android:inputType="text"
+                    android:inputType="date"
                     android:background="#0000"
                     android:padding="16dp"
                     android:layout_marginRight="35dp"

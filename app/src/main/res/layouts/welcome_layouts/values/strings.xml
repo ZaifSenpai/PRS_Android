@@ -6,4 +6,8 @@
     <string name="review">Review</string>
     <string name="about">About</string>
     <string name="recommendations">Recommendations</string>
+    <string name="invalid_email_or_password">Invalid Email or Password</string>
+    <string name="date_of_birth">DOB (YYYY-MM-DD)</string>
+    <string name="login_invalid_dob"><![CDATA[Please write a valid date (10 < DOB < 80)]]></string>
+    <string name="invalid_register_request">Invalid Register Request</string>
 </resources>

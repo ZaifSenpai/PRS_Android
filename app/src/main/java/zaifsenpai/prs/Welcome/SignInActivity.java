@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+import zaifsenpai.prs.General._Methods;
 import zaifsenpai.prs.General._Properties;
 import zaifsenpai.prs.R;
 
@@ -42,16 +42,15 @@ public class SignInActivity extends Activity {
             }
         });
 
-        TextView sign_in_button = findViewById(R.id.TV_sign_in);
+        final TextView sign_in_button = findViewById(R.id.TV_sign_in);
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final EditText u_name = findViewById(R.id.ET_SignIn_Username);
                 final EditText password = findViewById(R.id.ET_SignIn_Password);
-                final boolean[] finish_now = {false};
 
-                if (u_name.getText().length() < _Properties.USERNAME_MIN_LENGTH)
-                    u_name.setError(getString(R.string.login_invalid_username));
+                if (!_Methods.isValidEmail(u_name.getText().toString()))
+                    u_name.setError(getString(R.string.login_invalid_email));
                 if (password.getText().length() < _Properties.PASSWORD_MIN_LENGTH)
                     password.setError(getString(R.string.login_invalid_password));
 
@@ -64,15 +63,14 @@ public class SignInActivity extends Activity {
                                 public void onResponse(String response) {
                                     _Properties.Key = response;
                                     setResult(Activity.RESULT_OK, new Intent());
-                                    finish_now[0] = true;
+                                    finish();
                                 }
                             },
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     VolleyLog.d("volley", "Error: " + error.getMessage());
-                                    u_name.setError("Invalid username");
-                                    password.setError("Invalid password");
+                                    sign_in_button.setError(getString(R.string.invalid_email_or_password));
                                 }
                             }) {
 
@@ -82,7 +80,7 @@ public class SignInActivity extends Activity {
                         }
 
                         @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
+                        protected Map<String, String> getParams() {
                             Map<String, String> params = new HashMap<String, String>();
                             params.put("Email", u_name.getText().toString().trim());
                             params.put("Password", password.getText().toString().trim());
@@ -92,9 +90,6 @@ public class SignInActivity extends Activity {
 
                     LoginRequestQueue.add(jsonObjRequest);
                 }
-
-                if (finish_now[0])
-                    finish();
             }
         });
     }
