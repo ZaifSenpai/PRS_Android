@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/curved_rectangle"
+    tools:context=".Home.About">
+
+    <ImageView
+        android:id="@+id/backbutton_about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="37dp"
+        android:onClick="close"
+        android:src="@drawable/left" />
+
+    <TextView
+        android:id="@+id/appNameAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:gravity="center"
+        android:text="@string/app_name_full"
+        android:textColor="@android:color/primary_text_dark"
+        android:textSize="32dp" />
+
+    <RelativeLayout
+        android:id="@+id/about_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appNameAbout"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:src="@mipmap/ic_launcher_foreground" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/versionAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/about_icon"
+        android:gravity="center"
+        android:text="v 1.0"
+        android:textColor="@android:color/primary_text_dark"
+        />
+
+    <TextView
+        android:id="@+id/unofficialAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/versionAbout"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingTop="20dp"
+        android:text="FYP Project by UOGLhrSE_52"
+        android:textColor="@android:color/primary_text_dark"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/unofficialAbout"
+        android:gravity="center">
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -19,12 +19,12 @@ android {
     sourceSets {
         main {
             res.srcDirs =
-                [
-                    'src/main/res/layouts/welcome_layouts',
-                    'src/main/res/layouts/home_layouts',
-                    'src/main/res/layouts',
-                    'src/main/res'
-                ]
+                    [
+                            'src/main/res/layouts/welcome_layouts',
+                            'src/main/res/layouts/home_layouts',
+                            'src/main/res/layouts',
+                            'src/main/res'
+                    ]
         }
     }
 }

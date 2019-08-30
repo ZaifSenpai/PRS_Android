@@ -265,6 +265,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void about_onClickListener(MenuItem item) {
+        try {
+            Intent i = new Intent(MainActivity.this, About.class);
+            startActivity(i);
+        } catch (Exception ignored) {
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (_Methods.hasPermissions(this, permissions)) {
