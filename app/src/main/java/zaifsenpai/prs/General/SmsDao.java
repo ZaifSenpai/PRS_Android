@@ -28,6 +28,9 @@ public interface SmsDao {
     @Query("SELECT * FROM Sms WHERE Sms_ID_Source LIKE :sms_id_source")
     Sms GetSmsBySourceId(String sms_id_source);
 
+    @Query("SELECT * FROM Sms WHERE Sms_ID = (SELECT MAX(Sms_ID) FROM Sms)")
+    Sms GetLastSms();
+
     @Query("UPDATE Sms SET IsUploaded = '1' WHERE Sms_ID = :sms_id")
     void MarkSmsAsSendById(int sms_id);
 

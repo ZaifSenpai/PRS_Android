@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -44,9 +45,7 @@ public class SmsUploadService extends IntentService {
     }
 
     private void UploadSMS() {
-        int n;
-
-        while ((n = smsDatabase.smsDao().GetNonUploadedSmsCount()) > 0) {
+        while (smsDatabase.smsDao().GetNonUploadedSmsCount() > 0) {
             List<Sms> smsList = smsDatabase.smsDao().GetFirstNSmsNotUploaded(10);
 
             UploadSmsList(smsList);
@@ -91,9 +90,11 @@ public class SmsUploadService extends IntentService {
                 }
             }) {
                 @Override
-                public Map<String, String> getHeaders() {
-                    Map<String, String> headers = new HashMap<>();
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>(super.getHeaders());
+                    headers.remove("Content-Type");
                     headers.put("Content-Type", "application/json");
+                    headers.put("key", _Properties.Key);
                     return headers;
                 }
             };
